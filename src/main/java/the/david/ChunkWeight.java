@@ -18,7 +18,7 @@ public final class ChunkWeight extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new eventListener(), this);
         entityConfigReader.createCustomConfig();
         blockConfigReader.createCustomConfig();
-
+        animalConfigReader.createCustomConfig();
     }
 
     @Override
