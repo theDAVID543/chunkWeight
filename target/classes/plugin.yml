@@ -1,0 +1,4 @@
+name: chunkWeight
+version: '1.0-SNAPSHOT'
+main: the.david.ChunkWeight
+api-version: 1.19

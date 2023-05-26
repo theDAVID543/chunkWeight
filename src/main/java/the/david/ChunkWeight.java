@@ -9,11 +9,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.UUID;
 
 public final class ChunkWeight extends JavaPlugin {
+    public static JavaPlugin instance;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        instance = this;
         getServer().getPluginManager().registerEvents(new eventListener(), this);
+        entityConfigReader.createCustomConfig();
+        blockConfigReader.createCustomConfig();
 
     }
 
