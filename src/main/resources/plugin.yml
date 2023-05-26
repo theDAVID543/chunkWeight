@@ -1,0 +1,4 @@
+name: chunkWeight
+version: '${project.version}'
+main: the.david.ChunkWeight
+api-version: 1.19
