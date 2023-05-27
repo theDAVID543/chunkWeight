@@ -1,6 +1,7 @@
 package the.david;
 
 import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -9,16 +10,16 @@ import java.io.File;
 import java.io.IOException;
 
 public final class entityConfigReader {
-    public static Integer getChunkWeight(Chunk chunk) {
-        if(dataConfig.getString(String.valueOf(chunk)) == null){
+    public static Integer getChunkWeight(World world, Chunk chunk) {
+        if(dataConfig.getString(world + "." + chunk) == null){
             return null;
         }else{
-            return Integer.valueOf(dataConfig.getString(String.valueOf(chunk)));
+            return Integer.valueOf(dataConfig.getString(world + "." + chunk));
         }
     }
 
-    public static void setConfig(Chunk chunk, Integer weight) {
-        dataConfig.set(String.valueOf(chunk),weight);
+    public static void setConfig(World world, Chunk chunk, Integer weight) {
+        dataConfig.set(world + "." + chunk,weight);
         ChunkWeight.instance.saveConfig();
         try {
             dataConfig.save(dataConfigFile);
