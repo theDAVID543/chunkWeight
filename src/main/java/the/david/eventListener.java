@@ -46,23 +46,25 @@ public class eventListener implements Listener {
                 return;
             }
         }else{
-            if(!Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity().getWorld()),mobSpawnChunk.get(e.getEntity())),null) && getRandom(0,250000) >= animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()))){
+            if(!Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())),null) && getRandom(0,250000) >= animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()))){
                 e.setDroppedExp(0);
                 return;
             }
         }
-        if(!Objects.equal(e.getDroppedExp(),0) && !animals.contains(e.getEntity().toString())){
-            if(!animals.contains(uuidToType.get(e.getEntity()).toString())) {
-                if(Objects.equal(entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())), null)) {
-                    entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()), 250000 - e.getDroppedExp());
-                } else {
-                    entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()), entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
-                }
-            }else {
-                if(Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())), null)) {
-                    animalConfigReader.setConfig(e.getEntity().getWorld(), mobSpawnChunk.get(e.getEntity()), 250000 - e.getDroppedExp());
-                } else {
-                    animalConfigReader.setConfig(e.getEntity().getWorld(), mobSpawnChunk.get(e.getEntity()), animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
+        if(!Objects.equal(e.getDroppedExp(),0)){
+            if(!Objects.equal(uuidToType.get(e.getEntity()),null)){
+                if(!animals.contains(uuidToType.get(e.getEntity()).toString())) {
+                    if(Objects.equal(entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())), null)) {
+                        entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()), 250000 - e.getDroppedExp());
+                    } else {
+                        entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()), entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
+                    }
+                }else {
+                    if(Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())), null)) {
+                        animalConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), 250000 - e.getDroppedExp());
+                    } else {
+                        animalConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
+                    }
                 }
             }
         }

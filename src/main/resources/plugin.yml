@@ -2,3 +2,10 @@ name: chunkWeight
 version: '${project.version}'
 main: the.david.ChunkWeight
 api-version: 1.19
+commands:
+  chunkweight:
+    aliases:
+      - "cw"
+      - "weight"
+    description: "get the chunk weight of the current chunk"
+    usage: "/chunkweight"

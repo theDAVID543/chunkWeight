@@ -1,5 +1,6 @@
 the\david\eventListener.class
 the\david\ChunkWeight.class
+the\david\commandHandler.class
 the\david\blockConfigReader.class
 the\david\entityConfigReader.class
 the\david\animalConfigReader.class

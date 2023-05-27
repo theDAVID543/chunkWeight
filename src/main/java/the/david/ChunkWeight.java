@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public final class ChunkWeight extends JavaPlugin {
@@ -16,6 +17,7 @@ public final class ChunkWeight extends JavaPlugin {
         // Plugin startup logic
         instance = this;
         getServer().getPluginManager().registerEvents(new eventListener(), this);
+        Objects.requireNonNull(Bukkit.getPluginCommand("chunkweight")).setExecutor(new commandHandler());
         entityConfigReader.createCustomConfig();
         blockConfigReader.createCustomConfig();
         animalConfigReader.createCustomConfig();
