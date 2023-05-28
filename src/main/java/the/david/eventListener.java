@@ -14,6 +14,7 @@ import org.bukkit.event.block.BlockExpEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -85,6 +86,7 @@ public class eventListener implements Listener {
         } */
         mobSpawnChunk.put(e.getEntity(), e.getLocation().getChunk());
         mobSpawnWorld.put(e.getEntity(),e.getEntity().getWorld());
+        spawnLocConfigReader.setConfig(e.getEntity().getUniqueId(),e.getEntity().getLocation().x(),e.getEntity().getLocation().z(),e.getEntity().getWorld());
     }
     @EventHandler
     public void onBreed(EntityBreedEvent e){
