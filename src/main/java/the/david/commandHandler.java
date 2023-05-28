@@ -2,7 +2,6 @@ package the.david;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,17 +26,17 @@ public class commandHandler implements CommandExecutor {
         if(!Objects.equals(animalConfigReader.getChunkWeight(((Player) commandSender).getWorld(),((Player) commandSender).getChunk()),null)){
             commandSender.sendMessage(Component.text("  動物: ").color(TextColor.color(255, 170, 0)).append(Component.text(animalConfigReader.getChunkWeight(((Player) commandSender).getWorld(),((Player) commandSender).getChunk()).toString())));
         }else{
-            commandSender.sendMessage(Component.text("  動物: ").color(TextColor.color(255, 170, 0)).append(Component.text("250000")));
+            commandSender.sendMessage(Component.text("  動物: ").color(TextColor.color(255, 170, 0)).append(Component.text("12500")));
         }
         if(!Objects.equals(entityConfigReader.getChunkWeight(((Player) commandSender).getWorld(),((Player) commandSender).getChunk()),null)){
             commandSender.sendMessage(Component.text("  其他生物: ").color(TextColor.color(255, 170, 0)).append(Component.text(entityConfigReader.getChunkWeight(((Player) commandSender).getWorld(),((Player) commandSender).getChunk()).toString())));
         }else{
-            commandSender.sendMessage(Component.text("  其他生物: ").color(TextColor.color(255, 170, 0)).append(Component.text("250000")));
+            commandSender.sendMessage(Component.text("  其他生物: ").color(TextColor.color(255, 170, 0)).append(Component.text("12500")));
         }
         if(!Objects.equals(blockConfigReader.getChunkWeight(((Player) commandSender).getWorld(),((Player) commandSender).getChunk()),null)){
             commandSender.sendMessage(Component.text("  方塊: ").color(TextColor.color(255, 170, 0)).append(Component.text(blockConfigReader.getChunkWeight(((Player) commandSender).getWorld(),((Player) commandSender).getChunk()).toString())));
         }else{
-            commandSender.sendMessage(Component.text("  方塊: ").color(TextColor.color(255, 170, 0)).append(Component.text("250000")));
+            commandSender.sendMessage(Component.text("  方塊: ").color(TextColor.color(255, 170, 0)).append(Component.text("12500")));
         }
         return true;
     }

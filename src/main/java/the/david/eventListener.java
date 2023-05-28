@@ -2,7 +2,9 @@ package the.david;
 
 
 import com.google.common.base.Objects;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -41,30 +43,29 @@ public class eventListener implements Listener {
     @EventHandler
     public void onEntityDie(EntityDeathEvent e){
         if(!animals.contains(e.getEntityType().toString())){
-            if(!Objects.equal(entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())),null) && getRandom(0,250000) >= entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()))){
+            if(!Objects.equal(entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())),null) && getRandom(0,12500) >= entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()))){
                 e.setDroppedExp(0);
                 return;
             }
         }else{
-            if(!Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())),null) && getRandom(0,250000) >= animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()))){
+            if(!Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())),null) && getRandom(0,12500) >= animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()))){
                 e.setDroppedExp(0);
                 return;
             }
         }
         if(!Objects.equal(e.getDroppedExp(),0)){
-            if(!Objects.equal(uuidToType.get(e.getEntity()),null)){
-                if(!animals.contains(uuidToType.get(e.getEntity()).toString())) {
-                    if(Objects.equal(entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())), null)) {
-                        entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()), 250000 - e.getDroppedExp());
-                    } else {
-                        entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity()), entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
-                    }
-                }else {
-                    if(Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())), null)) {
-                        animalConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), 250000 - e.getDroppedExp());
-                    } else {
-                        animalConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()),mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
-                    }
+            e.getEntity().getType();
+            if (!animals.contains(uuidToType.get(e.getEntity()).toString())) {
+                if (Objects.equal(entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity())), null)) {
+                    entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), 12500 - e.getDroppedExp());
+                } else {
+                    entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
+                }
+            } else {
+                if (Objects.equal(animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity())), null)) {
+                    animalConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), 12500 - e.getDroppedExp());
+                } else {
+                    animalConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), animalConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity())) - e.getDroppedExp());
                 }
             }
         }
@@ -83,13 +84,12 @@ public class eventListener implements Listener {
             }
         } */
         mobSpawnChunk.put(e.getEntity(), e.getLocation().getChunk());
-        uuidToType.put(e.getEntity(), e.getEntityType());
         mobSpawnWorld.put(e.getEntity(),e.getEntity().getWorld());
     }
     @EventHandler
     public void onBreed(EntityBreedEvent e){
         if(animals.contains(e.getEntityType().toString())){
-            if(!Objects.equal(animalConfigReader.getChunkWeight(e.getEntity().getWorld(), e.getEntity().getLocation().getChunk()),null) && getRandom(0,250000) >= animalConfigReader.getChunkWeight(e.getEntity().getWorld(), e.getEntity().getLocation().getChunk())) {
+            if(!Objects.equal(animalConfigReader.getChunkWeight(e.getEntity().getWorld(), e.getEntity().getLocation().getChunk()),null) && getRandom(0,12500) >= animalConfigReader.getChunkWeight(e.getEntity().getWorld(), e.getEntity().getLocation().getChunk())) {
                 e.setExperience(0);
             }
         }
@@ -97,12 +97,12 @@ public class eventListener implements Listener {
     @EventHandler
     public void onBlockDropExp(BlockExpEvent e){
         if(!Objects.equal(blockConfigReader.getChunkWeight(e.getBlock().getWorld(),e.getBlock().getLocation().getChunk()),null)){
-            if(getRandom(0,250000) >= blockConfigReader.getChunkWeight(e.getBlock().getWorld(),e.getBlock().getLocation().getChunk())){
+            if(getRandom(0,12500) >= blockConfigReader.getChunkWeight(e.getBlock().getWorld(),e.getBlock().getLocation().getChunk())){
                 e.setExpToDrop(0);
             }
         }
         if(Objects.equal(blockConfigReader.getChunkWeight(e.getBlock().getWorld(),e.getBlock().getChunk()),null)){
-            blockConfigReader.setConfig(e.getBlock().getWorld(),e.getBlock().getLocation().getChunk(), 250000 - e.getExpToDrop());
+            blockConfigReader.setConfig(e.getBlock().getWorld(),e.getBlock().getLocation().getChunk(), 12500 - e.getExpToDrop());
         }else{
             blockConfigReader.setConfig(e.getBlock().getWorld(),e.getBlock().getLocation().getChunk(), blockConfigReader.getChunkWeight(e.getBlock().getWorld(),e.getBlock().getChunk()) - e.getExpToDrop());
         }
@@ -110,5 +110,13 @@ public class eventListener implements Listener {
     public int getRandom(int lower, int upper) {
         Random random = new Random();
         return random.nextInt((upper - lower) + 1) + lower;
+    }
+    public Location str2loc(String str){
+        String str2loc[]=str.split("\\:");
+        Location loc = new Location(Bukkit.getServer().getWorld(str2loc[0]),0,0,0);
+        loc.setX(Double.parseDouble(str2loc[1]));
+        loc.setY(Double.parseDouble(str2loc[2]));
+        loc.setZ(Double.parseDouble(str2loc[3]));
+        return loc;
     }
 }
