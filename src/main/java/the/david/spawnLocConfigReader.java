@@ -40,6 +40,13 @@ public final class spawnLocConfigReader {
         dataConfig.set(uuid + ".z",z);
         dataConfig.set(uuid + ".world",world.getName());
         ChunkWeight.instance.saveConfig();
+//        try {
+//            dataConfig.save(dataConfigFile);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+    public static void saveConfig(){
         try {
             dataConfig.save(dataConfigFile);
         } catch (IOException e) {

@@ -26,11 +26,11 @@ public final class ChunkWeight extends JavaPlugin {
         new BukkitRunnable() {
             @Override
             public void run() {
+                saveConfig();
                 for(String key : spawnLocConfigReader.getUUIDs()){
                     if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
                         if(getMob(UUID.fromString(key)) == null){
                             spawnLocConfigReader.remove(UUID.fromString(key));
-                            Bukkit.getLogger().info("removed " + UUID.fromString(key));
 
                         }
                     }
@@ -44,7 +44,6 @@ public final class ChunkWeight extends JavaPlugin {
                     if(getMob(UUID.fromString(key)) != null){
                         eventListener.mobSpawnChunk.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk());
                         eventListener.mobSpawnWorld.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld());
-                        Bukkit.getLogger().info("added " + UUID.fromString(key));
                     }
                 }
             }
