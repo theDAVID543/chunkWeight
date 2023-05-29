@@ -55,8 +55,7 @@ public class eventListener implements Listener {
             }
         }
         if(!Objects.equal(e.getDroppedExp(),0)){
-            e.getEntity().getType();
-            if (!animals.contains(uuidToType.get(e.getEntity()).toString())) {
+            if (!animals.contains(e.getEntityType().toString())) {
                 if (Objects.equal(entityConfigReader.getChunkWeight(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity())), null)) {
                     entityConfigReader.setConfig(mobSpawnWorld.get(e.getEntity()), mobSpawnChunk.get(e.getEntity()), 12500 - e.getDroppedExp());
                 } else {
