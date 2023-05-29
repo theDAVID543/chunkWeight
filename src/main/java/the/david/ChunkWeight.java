@@ -26,7 +26,7 @@ public final class ChunkWeight extends JavaPlugin {
         new BukkitRunnable() {
             @Override
             public void run() {
-                saveConfig();
+                spawnLocConfigReader.saveConfig();
                 for(String key : spawnLocConfigReader.getUUIDs()){
                     if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
                         if(getMob(UUID.fromString(key)) == null){
@@ -70,6 +70,7 @@ public final class ChunkWeight extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        spawnLocConfigReader.saveConfig();
         // Plugin shutdown logic
     }
     public static Entity getEntityByUniqueId(UUID uniqueId){
