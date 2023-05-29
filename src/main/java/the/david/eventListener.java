@@ -2,9 +2,7 @@ package the.david;
 
 
 import com.google.common.base.Objects;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -14,7 +12,6 @@ import org.bukkit.event.block.BlockExpEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 

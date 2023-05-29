@@ -27,16 +27,38 @@ public final class ChunkWeight extends JavaPlugin {
             @Override
             public void run() {
                 for(String key : spawnLocConfigReader.getUUIDs()){
-                    if(getMob(UUID.fromString(key)) == null){
-                        spawnLocConfigReader.remove(UUID.fromString(key));
+                    if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
+                        if(getMob(UUID.fromString(key)) == null){
+                            spawnLocConfigReader.remove(UUID.fromString(key));
+                            Bukkit.getLogger().info("removed " + UUID.fromString(key));
+
+                        }
                     }
                 }
-                //your action to do every minute
             }
+
         }.runTaskTimer(this,0,20*60);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+            for(String key : spawnLocConfigReader.getUUIDs()){
+                if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
+                    if(getMob(UUID.fromString(key)) != null){
+                        eventListener.mobSpawnChunk.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk());
+                        eventListener.mobSpawnWorld.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld());
+                        Bukkit.getLogger().info("added " + UUID.fromString(key));
+                    }
+                }
+            }
+        });
+//        for(String key : spawnLocConfigReader.getUUIDs()){
+//            if(!java.util.Objects.equals(ChunkWeight.getMob(UUID.fromString(key)),null)){
+//                eventListener.mobSpawnChunk.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk());
+//                eventListener.mobSpawnWorld.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld());
+//                Bukkit.getLogger().info("added " + UUID.fromString(key));
+//            }
+//        }
     }
-    public Entity getMob(UUID id) {
-        for(World w : getServer().getWorlds())
+    public static Entity getMob(UUID id) {
+        for(World w : Bukkit.getServer().getWorlds())
         {
             for(Entity e : w.getEntities())
             {

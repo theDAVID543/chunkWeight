@@ -1,6 +1,7 @@
 package the.david;
 
-import org.bukkit.Chunk;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -8,17 +9,19 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public final class spawnLocConfigReader {
-    public static Integer getSpawnLoc(World world,  Chunk chunk) {
-        if(dataConfig.getString(world + "." + chunk) == null){
+    public static Location getSpawnLoc(UUID uuid) {
+        if(dataConfig.getString(uuid.toString()) == null){
             return null;
         }else{
-            return Integer.valueOf(dataConfig.getString(world + "." + chunk));
+            World world = Bukkit.getWorld(dataConfig.getString(uuid.toString() + ".world" ));
+            double x = Double.parseDouble(dataConfig.getString(uuid + ".x" ));
+            double z = Double.parseDouble(dataConfig.getString(uuid + ".z"));
+            Location location = new Location(world,x,69d,z);
+            return location;
         }
     }
     public static Set<String> getUUIDs() {
