@@ -2,12 +2,19 @@ package the.david;
 
 
 import com.google.common.base.Objects;
+import io.papermc.paper.event.block.BlockBreakBlockEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExpEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -109,5 +116,48 @@ public class eventListener implements Listener {
     public int getRandom(int lower, int upper) {
         Random random = new Random();
         return random.nextInt((upper - lower) + 1) + lower;
+    }
+    private List<Material> crops = Arrays.asList(Material.WHEAT, Material.COCOA, Material.BEETROOTS, Material.CARROTS, Material.POTATOES, Material.SWEET_BERRY_BUSH);
+    @EventHandler
+    public void onBlockBreakBlock(BlockBreakBlockEvent e){
+        if(crops.contains(e.getBlock().getType())) {
+            Ageable crop = (Ageable) e.getBlock().getBlockData();
+            if(crop.getAge() == crop.getMaximumAge()){
+                if (!Objects.equal(blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk()), null)) {
+                    if (getRandom(0, chunkLimit) <= blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk())) {
+                        ExperienceOrb orb = e.getBlock().getWorld().spawn(e.getBlock().getLocation(), ExperienceOrb.class);
+                        orb.setExperience(orb.getExperience() + 3);
+                    }else{
+                        return;
+                    }
+                }
+                if (Objects.equal(blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getChunk()), null)) {
+                    blockConfigReader.setConfig(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk(), chunkLimit - 3);
+                } else {
+                    blockConfigReader.setConfig(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk(), blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getChunk()) - 3);
+                }
+            }
+        }
+    }
+    @EventHandler
+    public void onBreakBlock(BlockBreakEvent e){
+        if(crops.contains(e.getBlock().getType())) {
+            Ageable crop = (Ageable) e.getBlock().getBlockData();
+            if(crop.getAge() == crop.getMaximumAge()){
+                if (!Objects.equal(blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk()), null)) {
+                    if (getRandom(0, chunkLimit) <= blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk())) {
+                        ExperienceOrb orb = e.getBlock().getWorld().spawn(e.getBlock().getLocation(), ExperienceOrb.class);
+                        orb.setExperience(orb.getExperience() + 3);
+                    }else{
+                        return;
+                    }
+                }
+                if (Objects.equal(blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getChunk()), null)) {
+                    blockConfigReader.setConfig(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk(), chunkLimit - 3);
+                } else {
+                    blockConfigReader.setConfig(e.getBlock().getWorld(), e.getBlock().getLocation().getChunk(), blockConfigReader.getChunkWeight(e.getBlock().getWorld(), e.getBlock().getChunk()) - 3);
+                }
+            }
+        }
     }
 }
