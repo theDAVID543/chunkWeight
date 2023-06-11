@@ -7,11 +7,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public final class ChunkWeight extends JavaPlugin {
     public static JavaPlugin instance;
+    private static Integer oldDay;
 
     @Override
     public void onEnable() {
@@ -31,13 +32,24 @@ public final class ChunkWeight extends JavaPlugin {
                     if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
                         if(getMob(UUID.fromString(key)) == null){
                             spawnLocConfigReader.remove(UUID.fromString(key));
-
                         }
                     }
                 }
+                TimeZone timeZone = TimeZone.getTimeZone("Asia/Taipei");
+                Date now = Calendar.getInstance(timeZone).getTime();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("u");
+                Integer time = Integer.valueOf(simpleDateFormat.format(now));
+                if(!Objects.equals(oldDay,null) && !Objects.equals(time,oldDay)){
+                    Bukkit.getLogger().info("day changed");
+                    entityConfigReader.resetConfig();
+                    animalConfigReader.resetConfig();
+                    blockConfigReader.resetConfig();
+                }
+                oldDay = time;
             }
 
         }.runTaskTimer(this,0,20*60);
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
             for(String key : spawnLocConfigReader.getUUIDs()){
                 if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){

@@ -38,6 +38,11 @@ public class commandHandler implements CommandExecutor {
         }else{
             commandSender.sendMessage(Component.text("  方塊: ").color(TextColor.color(255, 170, 0)).append(Component.text("750")));
         }
+        if(strings.length == 1 && Objects.equals(strings[0],"reset") && commandSender.isOp()){
+            entityConfigReader.resetConfig();
+            animalConfigReader.resetConfig();
+            blockConfigReader.resetConfig();
+        }
         return true;
     }
 }

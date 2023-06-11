@@ -27,6 +27,10 @@ public final class animalConfigReader {
             throw new RuntimeException(e);
         }
     }
+    public static void resetConfig(){
+        ChunkWeight.instance.saveResource("data/animal_chunk_weight.yml", true);
+        dataConfig = new YamlConfiguration();
+    }
     private static File dataConfigFile;
     private static FileConfiguration dataConfig;
 

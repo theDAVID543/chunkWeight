@@ -29,6 +29,10 @@ public final class entityConfigReader {
     }
     private static File dataConfigFile;
     private static FileConfiguration dataConfig;
+    public static void resetConfig(){
+        ChunkWeight.instance.saveResource("data/entity_chunk_weight.yml", true);
+        dataConfig = new YamlConfiguration();
+    }
 
     public static void createCustomConfig() {
         dataConfigFile = new File(ChunkWeight.instance.getDataFolder(), "data/entity_chunk_weight.yml");

@@ -27,6 +27,10 @@ public final class blockConfigReader {
             throw new RuntimeException(e);
         }
     }
+    public static void resetConfig(){
+        ChunkWeight.instance.saveResource("data/block_chunk_weight.yml", true);
+        dataConfig = new YamlConfiguration();
+    }
     private static File dataConfigFile;
     private static FileConfiguration dataConfig;
 
