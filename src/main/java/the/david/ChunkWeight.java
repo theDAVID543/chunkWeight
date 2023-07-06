@@ -23,18 +23,34 @@ public final class ChunkWeight extends JavaPlugin {
         entityConfigReader.createCustomConfig();
         blockConfigReader.createCustomConfig();
         animalConfigReader.createCustomConfig();
-        spawnLocConfigReader.createCustomConfig();
+//        new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                spawnLocConfigReader.saveConfig();
+//                for(String key : Objects.requireNonNull(spawnLocConfigReader.getUUIDs())){
+//                    Bukkit.getScheduler ().runTaskLater (instance, () -> {
+//                        if(!Objects.equals(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)),null)){
+//                            Chunk chunk = Objects.requireNonNull(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key))).getChunk();
+//                            UUID mob = UUID.fromString(key);
+//                            World world = Objects.requireNonNull(spawnLocConfigReader.getSpawnLoc(mob)).getWorld();
+//                            if(!Objects.equals(world,null)){
+//                                if(world.isChunkLoaded(chunk)){
+//                                    if(getMob(mob) == null){
+//                                        spawnLocConfigReader.remove(mob);
+//                                    }
+//                                }
+//                            }else{
+//                                spawnLocConfigReader.remove(mob);
+//                            }
+//                        }
+//                    }, 1L);
+//                }
+//            }
+//
+//        }.runTaskTimer(this,0,20*300);
         new BukkitRunnable() {
             @Override
             public void run() {
-                spawnLocConfigReader.saveConfig();
-                for(String key : spawnLocConfigReader.getUUIDs()){
-                    if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
-                        if(getMob(UUID.fromString(key)) == null){
-                            spawnLocConfigReader.remove(UUID.fromString(key));
-                        }
-                    }
-                }
                 TimeZone timeZone = TimeZone.getTimeZone("Asia/Taipei");
                 Date now = Calendar.getInstance(timeZone).getTime();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("u");
@@ -50,16 +66,17 @@ public final class ChunkWeight extends JavaPlugin {
 
         }.runTaskTimer(this,0,20*60);
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
-            for(String key : spawnLocConfigReader.getUUIDs()){
-                if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
-                    if(getMob(UUID.fromString(key)) != null){
-                        eventListener.mobSpawnChunk.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk());
-                        eventListener.mobSpawnWorld.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld());
-                    }
-                }
-            }
-        });
+
+//        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+//            for(String key : spawnLocConfigReader.getUUIDs()){
+//                if(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld().isChunkLoaded(spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk())){
+//                    if(getMob(UUID.fromString(key)) != null){
+//                        eventListener.mobSpawnChunk.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk());
+//                        eventListener.mobSpawnWorld.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getWorld());
+//                    }
+//                }
+//            }
+//        });
 //        for(String key : spawnLocConfigReader.getUUIDs()){
 //            if(!java.util.Objects.equals(ChunkWeight.getMob(UUID.fromString(key)),null)){
 //                eventListener.mobSpawnChunk.put(ChunkWeight.getMob(UUID.fromString(key)),spawnLocConfigReader.getSpawnLoc(UUID.fromString(key)).getChunk());
@@ -82,7 +99,6 @@ public final class ChunkWeight extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        spawnLocConfigReader.saveConfig();
         // Plugin shutdown logic
     }
     public static Entity getEntityByUniqueId(UUID uniqueId){
