@@ -36,7 +36,7 @@ public class eventListener implements Listener {
     private ArrayList<String> animals = new ArrayList<String>(
             Arrays.asList("ABSTRACTHORSE", "AXOLOTL", "BEE", "CAMEL", "CAT", "CHESTEDHORSE", "CHICKEN", "COW", "DONKEY", "FOX", "FROG", "GOAT", "HOGLIN", "HORSE", "LLAMA", "MULE", "MUSHROOMCOW", "OCELOT", "PANDA", "PARROT", "PIG", "POLARBEAR", "RABBIT", "SHEEP", "SKELETONHORSE", "SNIFFER", "STEERABLE", "STRIDER", "TAMEABLE", "TRADERLLAMA", "TURTLE", "WOLF", "ZOMBIEHORSE")
     );
-    private final Integer chunkLimit = 750;
+    private final Integer chunkLimit = 500;
 /*    @EventHandler
     public void onPickExpOrb(PlayerPickupExperienceEvent e){
         if(!Objects.equal(e.getExperienceOrb().getSourceEntityId(),null) && !Objects.equal(e.getExperienceOrb().getSpawnReason().toString(),"EXP_BOTTLE") && !animals.contains(uuidToType.get(e.getExperienceOrb().getSourceEntityId()).toString())){
