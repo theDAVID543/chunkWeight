@@ -63,7 +63,7 @@ public class eventListener implements Listener {
             chest.update();
         }
     }
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent e){
         if(e.hasBlock() && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && java.util.Objects.equals(e.getClickedBlock().getType(), Material.CHEST)){
             Chest chest;
@@ -177,7 +177,7 @@ public class eventListener implements Listener {
     public void onBlockFertilize(BlockFertilizeEvent e){
         fertilized.put(e.getBlock().getLocation(), true);
     }
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onBlockBreakBlock(BlockBreakBlockEvent e){
         if(!java.util.Objects.equals(fertilized.get(e.getBlock().getLocation()),true)){
             if(crops.contains(e.getBlock().getType())) {
@@ -201,7 +201,7 @@ public class eventListener implements Listener {
         }
         fertilized.remove(e.getBlock().getLocation());
     }
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onBreakBlock(BlockBreakEvent e){
         if(!java.util.Objects.equals(fertilized.get(e.getBlock().getLocation()),true)){
             if(crops.contains(e.getBlock().getType())) {
